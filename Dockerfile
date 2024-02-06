@@ -21,7 +21,7 @@ RUN apt-get update && apt-get install -y \
     libreadline-dev \
     openocd \
     pkg-config \
-    python3 \
+    python3.11 \
     python3-pip \
     python3-venv \
     tcl \
