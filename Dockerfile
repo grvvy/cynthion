@@ -22,8 +22,6 @@ RUN apt-get update && apt-get install -y \
     openocd \
     pkg-config \
     python3.11 \
-    python3-pip \
-    python3-venv \
     tcl \
     tcl-dev \
     zlib1g-dev \
