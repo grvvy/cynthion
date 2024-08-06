@@ -5,24 +5,32 @@ pipeline {
             args '--group-add=46 --device-cgroup-rule="c 189:* rmw" -v /dev/bus/usb:/dev/bus/usb'
         }
     }
+    agent any
     stages {
-        stage('Build') {
-            steps {
-                sh './ci/build.sh'
+        stage('Build Docker Image') {
+            sh 'docker build -t cynthion https://github.com/grvvy/cynthion.git'
+        }
+    }
+    stage('Test Suite') {
+        agent{
+            docker {
+                image 'cynthion'
+                reuseNode true
+                args '--name cynthion_container --group-add=46 --device-cgroup-rule="c 189:* rmw" --device /dev/bus/usb'
+                additionalBuildArgs '--build-arg CACHEBUST=$(date +%s)'
             }
         }
-        stage('Test') {
-            steps {
-                sh './ci/configure-hubs.sh --off'
-                retry(3) {
-                    sh './ci/test.sh'
-                }
+        steps {
+            sh './ci/build.sh'
+            sh 'hubs all off'
+            retry(3) {
+                sh './ci/test.sh'
             }
+            sh 'hubs all reset'
         }
     }
     post {
         always {
-            sh './ci/configure-hubs.sh --reset'
             cleanWs(cleanWhenNotBuilt: false,
                     deleteDirs: true,
                     disableDeferredWipeout: true,
