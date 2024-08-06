@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t cynthion https://github.com/grvvy/cynthion.git'
+                sh 'docker build --build-arg CACHEBUST=$(date +%s) -t cynthion https://github.com/grvvy/cynthion.git'
             }
         }
         stage('Test Suite') {
@@ -12,7 +12,6 @@ pipeline {
                     image 'cynthion'
                     reuseNode true
                     args '--name cynthion_container --group-add=46 --device-cgroup-rule="c 189:* rmw" --device /dev/bus/usb'
-                    additionalBuildArgs '--build-arg CACHEBUST=$(date +%s)'
                 }
             }
             steps {
