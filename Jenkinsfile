@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build Docker Image') {
             steps {
-                sh 'docker build --build-arg CACHEBUST=$(date +%s) -t cynthion https://github.com/grvvy/cynthion.git'
+                sh 'docker build --build-arg CACHEBUST=$(date +%s) -t cynthion https://github.com/grvvy/cynthion.git#ppps_update'
             }
         }
         stage('Test Suite') {
