@@ -36,7 +36,6 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # install latest from oss-cad-suite
-ARG CACHEBUST=1
 RUN curl -L $(curl -s "https://api.github.com/repos/YosysHQ/oss-cad-suite-build/releases/latest" \
     | jq --raw-output '.assets[].browser_download_url' | grep "linux-x64") --output oss-cad-suite-linux-x64.tgz \
     && tar zxvf oss-cad-suite-linux-x64.tgz
