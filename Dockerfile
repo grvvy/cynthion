@@ -24,6 +24,7 @@ RUN apt-get update && apt-get install -y \
     libboost-all-dev \
     libeigen3-dev \
     libreadline-dev \
+    libusb-1.0-0-dev \
     openocd \
     pkg-config \
     python3.11 \
