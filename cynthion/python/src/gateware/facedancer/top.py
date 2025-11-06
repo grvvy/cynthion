@@ -324,7 +324,7 @@ class Soc(Component):
         m.submodules += self.wb_to_csr
 
         # wire up the cpu external reset signal
-        delay = Signal(18)
+        delay = Signal(20)
         with m.If(~delay.all()):
             m.d.sync += delay.eq(delay + 1)
             m.d.comb += self.cpu.ext_reset.eq(1)
