@@ -12,7 +12,14 @@ pipeline {
                 docker {
                     image 'cynthion'
                     reuseNode true
-                    args '--name cynthion_container --group-add=46 --device-cgroup-rule="c 189:* rmw" --device /dev/bus/usb'
+                    args '''
+                            --name cynthion_container
+                            --group-add=46
+                            --device-cgroup-rule="c 189:* rmw"
+                            --device /dev/bus/usb
+                            -v /tmp/req_pipe:/tmp/req_pipe
+                            -v /tmp/res_pipe:/tmp/res_pipe
+                        '''
                 }
             }
             steps {
@@ -38,6 +45,8 @@ pipeline {
                             --device /dev/bus/usb
                             --volume /run/udev/control:/run/udev/control
                             --net=host
+                            -v /tmp/req_pipe:/tmp/req_pipe
+                            -v /tmp/res_pipe:/tmp/res_pipe
                         '''
                 }
             }
